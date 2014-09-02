@@ -405,7 +405,7 @@ Example:
 - CSS `:before` content value > `\e600`
 
 
-#### <img> tags and "alt" attribute ####
+#### Image tags and "alt" attribute ####
 
 All `<img>` tags should have a meaningful "alt" attribute.
 
