@@ -405,3 +405,17 @@ Example:
 - CSS `:before` content value > `\e600`
 
 
+#### <img> tags and "alt" attribute ####
+
+All `<img>` tags should have a meaningful "alt" attribute.
+
+- For images representing text (eg: main logo), the "alt" attribute should be a transcript of the text itself (eg: "testachats.be", not "test achats logo").
+- For images of a product or service, the name of the product or service should be the "alt" attribute.
+- For images which are links to other pages, the "alt" attribute should describe the landing target of the link (eg: the title of the target page).
+- For images representing an editorial item (eg: a news article), the "alt" attribute should be the title of the editorial content.
+- For images included in the body of an editorial content, the "alt" attribute should be inherited by the caption of the same image.
+- `<img>` tags that are only for decoration/structure should be avoided as a general rule (and use background-images), but in the case they're used, and empty "alt" attribute is acceptable ( `alt=""` )
+- `<img>` tags shouldn't be used for icons/buttons (see "icons" section), but in case they're used, the "alt" attribute should describe the action expected by clicking on the element (eg: close, cancel, send, etc). If the icon has no behavior attached and is purely for decoration, an empty "alt" attribute is acceptable.
+
+
+
