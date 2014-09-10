@@ -368,22 +368,42 @@ Depending of the DEV tools you are using, some configuration may be needed to ma
 
 #### Icons ####
 
-When an icon must be placed in the design, try to follow these rules when possible:
+Icons can be reduced to 2 kinds:
+- Standalone icons: symbols that don't have any text beside them, usually clickable (eg: close button on overlays)
+- Decoration icons: symbols that have meaningful text beside them, used mostly just as decoration (eg: tags). the entire element (label + icon) can be clickable or not.
 
-- Use a wrapping element  with the class `.icon-font` and a custom class eg: `.icon-zoom`
-- Define a pseudo-element `:before` to the custom class via css
-- As the "content" value of the pseudo-element `:before` use a character from the font library "icomoon" (if a suitable icon is not available, the library itself can be extended).
-- If the icon is a “stand-alone” clickable item (eg: “x” button for closing overlays) or doesn’t have an explanatory label besides it, add a span inside the wrapper in which a meaningful explanatory text can be included  for accessibility purposes.  Use the css class `.screenreader-text` for this element.
+Depending on the kind of icon needed, the html/css may have different structure.
+In both cases, a specific class for the icon needed must be defined.
+- Check the icon page in the styleguide (/includes/patterns/icons in your localhost) for an icon that can suit the current need. If there isn't one, a new icon must be included in the set and a new class created.
+- Use the online tool [Icomoon](https://icomoon.io/app) to import the existing set, add the additional icon, and export the new set.
+- In the file _icon-font.scss define a new pseudo-element `:before` with a meaningful name, starting with "icon-".
+- As the "content" value of the pseudo-element enter the css code of the new icon.
+- For reference, extend the styleguide liquid file (icons.liquid) including a new row with the new icon
 
-###### HTML: ######
+Once the icon class has been defined, it can be used to stylize the element depending on kind of icon (standalone or decoration).
+
+###### Standalone icons ######
+- Use a wrapping element with the class `.icon-font` and a the icon class defined earlier, eg: `.icon-zoom`
+- Inside the wrapper add a span in which a meaningful explanatory text can be included, for accessibility purposes. Use the css class `.screenreader-text` for this element in order to hide it.
+
+####### HTML: #######
     <span class="icon-font icon-zoom">
       <span class="screenreader-text">Zoom</span>
     </span>
+    
+###### Decoration icons ######
+- Use a wrapping element with the icon class defined earlier (eg: `.icon-zoom`) and any custom class needed (eg: `.tag` or `.marker`)
+- Define a `:before` pseudo-element for the custom class, and with scss `@extend .icon-font;`
 
-###### CSS: ######
-    .icon-zoom:before {
-      content: "\e613"
-    }
+####### HTML: #######
+    <span class="icon-zoom tag">
+      Click here to zoom
+    </span>
+
+####### SCSS: #######
+    .tag:before {
+		@extend .icon-font;
+		}
 
 Try to avoid, unless absolutely necessary:
 
