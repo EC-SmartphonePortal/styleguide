@@ -47,6 +47,10 @@ Separate *structure* from *presentation* from *behavior* to aid maintainability 
 
 Write code that is easy to read for other front-end devs. Don’t be too clever, write it in an easy and understandable way for others.
 
+#### Class names should communicate useful information to developers ####
+
+It’s helpful to understand what a specific class name is going to do when you read a DOM snippet, especially in multi-developer teams where front-enders won’t be the only people working with HTML components.
+
 #### Commenting ####
 
 Don’t leave pieces of code that are commented out in the codebase. It makes the code look unfinished and we have SVN logs to keep a history of all the pieces of code that were written.
