@@ -428,11 +428,11 @@ Try to avoid, unless absolutely necessary:
 The icons reside in a font library in this path:
 - \ui\fonts
 
-The library is composed by various files. The "summary" of all the information about each icon and associated class is the file `config.json`. This file must always kept updated at each change of the library.
+The library is composed by various files. The "summary" of all the information about each icon and associated classes is the file `config.json`. This file must always kept updated at each change of the library.
 
 In order to compose the library with a custom set of icons, the online freeware too Fontello is used: http://fontello.com/
 
-Steps necessary to perform to add a new icon or icons to the library:
+Steps necessary to add a new icon or icons to the library:
 
 - Double check if the icon needed isn't already available in the existing library.
 - If it isn't, proceed to http://fontello.com/
