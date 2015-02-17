@@ -372,41 +372,90 @@ Depending of the DEV tools you are using, some configuration may be needed to ma
 
 #### Icons ####
 
-When an icon must be placed in the design, try to follow these rules when possible:
+Icons are usually added besides (left or right of) a meaningful text as a decoration or visual aid. As a convention we always include the icon in the markup as an empty `<i>` element, in order to quickly identify it.
+Depending on the position of the icon compared to the text, the `<i>` element has to have one of the following classes:
+- icon-font--before (the icon is left of the text)
+- icon-font--after (the icon is right of the text)
 
-- Use a wrapping element  with the class `.icon-font` and a custom class eg: `.icon-zoom`
-- Define a pseudo-element `:before` to the custom class via css
-- As the "content" value of the pseudo-element `:before` use a character from the font library "icomoon" (if a suitable icon is not available, the library itself can be extended).
-- If the icon is a “stand-alone” clickable item (eg: “x” button for closing overlays) or doesn’t have an explanatory label besides it, add a span inside the wrapper in which a meaningful explanatory text can be included  for accessibility purposes.  Use the css class `.screenreader-text` for this element.
+These classes will correctly distribute spacing between the text and the icon. If the icon has no text besides it (eg: "x" close buttons), this class it not needed.
+To identify the kind of pictogram the icon must show, another class is necessary. This kind of class always starts with
+- icon-(name of the object)
 
-###### HTML: ######
-    <span class="icon-font icon-zoom">
-      <span class="screenreader-text">Zoom</span>
-    </span>
+The complete list of pictograms and relative classes available in the library is here: http://int.euroconsumer.cxdev.co.uk/patterns/icons.html
 
-###### CSS: ######
-    .icon-zoom:before {
-      content: "\e613"
+Other, optinal, classes may be added to the `<i>` element, in order to determine the size, color, spacing and wrapping behavior of the icon. A list of the usable classes and their effects is available here http://int.euroconsumer.cxdev.co.uk/patterns/icons.html
+
+When introducing icons that need additional style (different color than the standard ones, different size, etc), it's always better to avoid including the icon subject in the custom class.
+Eg. avoid this:
+
+    .introduction-icon {
+    	@extend icon-font--before;
+    	@extend .icon-info;
+    	font-size: 30px;
+    	color: purple;
     }
+	
+    <i class="introduction-icon"></i>
+
+It's better instead to include the subject as a separate class, to maximize re-usability. Like:
+
+    .introduction-icon {
+    	font-size: 30px;
+    	color: purple;
+    }
+	
+    <i class="icon-font--before icon-info introduction-icon"></i>
+	
+
+####### HTML: #######
+    <p>
+    	<i class="icon-font--before icon-smartphone"></i>
+    	Smartphones
+    </p>
+    
+    <p>
+	    Danger!
+	    <i class="icon-font--after icon-attention"></i>
+    </p>
+    
 
 Try to avoid, unless absolutely necessary:
 
-- Using a background image instead of icomoon characters
-- Putting icomoon characters in the html instead of css
+- Using a background image instead of icon characters
+- Putting icon codes in the html instead of relying on icon-(object) classes
 - Overcomplicated html structure
-- Writing new classes for the same purposes as [ .icon-font ]and [  .screenreader-text ] are for, or attaching similar properties to the custom class.
-- Skip the inclusion of a meaningful text when not already present beside the icon.
+- Writing new classes for the same purpose of existing ones, or attaching similar properties to custom class.
 
-##### A note about encoding characters for css: #####
 
-A list of all the library icons with the corresponding ASCII codes can be found on the prototype (Elements > Icons).
+####### How to add icons to the library #######
 
-CSS Unicode is different than ascii, therefore ascii codes (eg: `&#xE600;` ) won’t work as content value for `:before` pseudo-elements. The code must be “translated” in css Unicode. This can be easily done by changing the characters surrounding the code. Examples:
+The icons reside in a font library in this path:
+- \ui\fonts
 
-Example:
+The library is composed by various files. The "summary" of all the information about each icon and associated classes is the file `config.json`. This file must always kept updated at each change of the library.
 
-- ASCII code > `&#xE600;`
-- CSS `:before` content value > `\e600`
+In order to compose the library with a custom set of icons, the online freeware too Fontello is used: http://fontello.com/
+
+Steps necessary to add a new icon or icons to the library:
+
+- Double check if the icon needed isn't already available in the existing library.
+- If it isn't, proceed to http://fontello.com/
+- If any icon is appearing under "custom icons", click "clear selected icons/clear all icons" beside the title
+- Drag the file `config.json` in the grey area with the text "drag custom SVG" (use the json file for this, don't use the SVG file, otherwise all classnames and custom codes will be lost!)
+- Now all the current library icons are selected in fontello. Search for the new one needed with the search top left tool (eg: write "tree")
+- Select the chosen icon. Now all the current library icons PLUS the new icon are selected
+- Select the tab "customize names". All the selected icons will appear (current + new one) with their class names. If needed, change the class name of the new icon in something meaningful. Try chosing a name describing the subject, not the function (eg: "tree", not "nature" or "environmental-policies"). Do not change any of the pre-existing icon names.
+- Select the tab "customize codes". Don't change any value, but copy/annotate the code of the new icon (eg: `E81B`)
+- Click "download webfont" top right button.
+- Open the downloaded zip file, extract `config.json` (important!) and all the files inside the "font" folder in the svn solution \ui\fonts path. Overwrite everything (5 files total: json, eot, svg, ttf, woff)
+- Now the library is updated, but a new class is needed in order to use the icon properly in the portal. Open \ui\sass\config\_icons.scss file
+- At the bottom of the file, add a new class with the chosen class name (eg: ".icon-tree") and as the "content" css value the code copied previously from fontello (eg: `E81B` becomes `\e81b` )
+- Now the class is ready to be used in the portal. It's important however to document the addition in the icon pattern. Open \templates\includes\patterns\icons.liquid
+- Identify the right section in which the icon has to be added (eg: "objects"). At the bottom of said section add a block with the new icon, minding to correctly annotate the class name and the code for documentation. Check the result in the compiled page (the icon should show correctly)
+- During the SVN commit of the changes, pay attention to commit correctly `config.json` file as well
+
+
+
 
 
 #### Image tags and "alt" attribute ####
